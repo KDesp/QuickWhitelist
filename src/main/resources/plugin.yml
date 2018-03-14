@@ -1,0 +1,9 @@
+name: QuickWhitelist
+main: me.gbalint.quickwhitelist.QuickWhitelist
+version: ${project.version}
+description: Quick & dirty name based whitelist solution
+author: gbalint
+commands:
+  quickwhitelist:
+    description: Manage server whitelist with custom features.
+    aliases: [qw,qwhitelist,qwl]

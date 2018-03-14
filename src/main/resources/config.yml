@@ -1,0 +1,14 @@
+enabled: false
+whitelisted:
+  - gbalint
+msgs:
+  noperm: "&4No permission."
+  status: "&dStatus: &c%status%\n&8Whitelisted players(&d%count%&8): "
+  kick: "&9You are not whitelisted!"
+  enabled: "&aWhitelist turned on"
+  disabled: "&cWhitelist turned off"
+  wl-clear: "&7Whitelist cleared."
+  console-log: "%player% wasn't on the WL, thus got kicked"
+  wl-flush: "&7Whitelist cache flushed to disk."
+  cacheclear: "&7Whitelist cache cleared."
+  argument-error: "&7Wrong argument structure"
