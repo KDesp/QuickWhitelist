@@ -1,6 +1,5 @@
 enabled: false
-whitelisted:
-  - gbalint
+whitelisted: []
 msgs:
   noperm: "&4No permission."
   status: "&dStatus: &c%status%\n&8Whitelisted players(&d%count%&8): "
@@ -12,3 +11,5 @@ msgs:
   wl-flush: "&7Whitelist cache flushed to disk."
   cacheclear: "&7Whitelist cache cleared."
   argument-error: "&7Wrong argument structure"
+  player-add: "&7Player successfully added"
+  player-remove: "&7Player successfully removed"

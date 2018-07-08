@@ -60,6 +60,7 @@ public class WLCommand implements CommandExecutor {
                                 '&', plugin.getConfig().getString("msgs.noperm")));
                     } else {
                         plugin.reloadConfig();
+                        plugin.refreshWLEnabled();
                         plugin.refreshWLCache();
                         sender.sendMessage("Config Reloaded!");
                     }
@@ -93,8 +94,12 @@ public class WLCommand implements CommandExecutor {
             }
         } else if (strings[0].equalsIgnoreCase("add")) {
             plugin.addToWLCache(strings[1]);
+            sender.sendMessage(ChatColor.translateAlternateColorCodes(
+                    '&',  plugin.getConfig().getString("msgs.player-add")));
         } else if (strings[0].equalsIgnoreCase("remove")) {
             plugin.removeFromWLCache(strings[1]);
+            sender.sendMessage(ChatColor.translateAlternateColorCodes(
+                    '&',  plugin.getConfig().getString("msgs.player-remove")));
         }
         return true;
     }

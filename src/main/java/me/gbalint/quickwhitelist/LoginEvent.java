@@ -3,6 +3,7 @@ package me.gbalint.quickwhitelist;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 
@@ -16,18 +17,18 @@ public class LoginEvent implements Listener {
         whitelistCache = plugin.getWLCache();
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void PlayerLoginEvent(PlayerLoginEvent e){
         Player p = e.getPlayer();
-        if (!plugin.isEnabled()){
+        if (!plugin.getWLEnabled()){
             return;
         }
-        if (!(whitelistCache.contains(p.getDisplayName()) || p.hasPermission("quickwhitelist.bypass"))) {
+        if (!(whitelistCache.contains(p.getName()) || p.hasPermission("quickwhitelist.bypass"))) {
             e.disallow(PlayerLoginEvent.Result.KICK_OTHER,
                     ChatColor.translateAlternateColorCodes(
                             '&',
                             plugin.getConfig().getString("msgs.kick","&9You are not whitelisted!")));
-            plugin.getLogger().warning(plugin.getConfig().getString("msgs.console-log"));
+            plugin.getLogger().warning(plugin.getConfig().getString("msgs.console-log").replaceAll("%player%",p.getName()));
         }
     }
 }
