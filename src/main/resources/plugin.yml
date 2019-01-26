@@ -1,7 +1,7 @@
 name: QuickWhitelist
 main: me.gbalint.quickwhitelist.QuickWhitelist
 version: ${project.version}
-description: Quick & dirty name based whitelist solution
+description: Name based whitelist solution
 author: gbalint
 commands:
   quickwhitelist:
