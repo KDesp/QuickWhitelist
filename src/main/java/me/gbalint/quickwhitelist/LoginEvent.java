@@ -11,19 +11,17 @@ import java.util.HashSet;
 
 public class LoginEvent implements Listener {
     private QuickWhitelist plugin;
-    private HashSet<String> whitelistCache;
     LoginEvent(QuickWhitelist plugin) {
         this.plugin = plugin;
-        whitelistCache = plugin.getWLCache();
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void PlayerLoginEvent(PlayerLoginEvent e){
         Player p = e.getPlayer();
         if (!plugin.getWLEnabled()){
             return;
         }
-        if (!(whitelistCache.contains(p.getName()) || p.hasPermission("quickwhitelist.bypass"))) {
+        if (!(plugin.getWLCache().contains(p.getName()) || p.hasPermission("quickwhitelist.bypass"))) {
             e.disallow(PlayerLoginEvent.Result.KICK_OTHER,
                     ChatColor.translateAlternateColorCodes(
                             '&',

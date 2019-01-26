@@ -32,15 +32,15 @@ public class WLCommand implements CommandExecutor {
                     plugin.getConfig().set("enabled", true);
                     sender.sendMessage(ChatColor.translateAlternateColorCodes(
                             '&', plugin.getConfig().getString("msgs.enabled")));
-                    plugin.saveConfig();
                     plugin.refreshWLEnabled();
+                    plugin.saveConfig();
                     break;
                 case "disable":
                     plugin.getConfig().set("enabled", false);
                     sender.sendMessage(ChatColor.translateAlternateColorCodes(
                             '&', plugin.getConfig().getString("msgs.disabled")));
-                    plugin.saveConfig();
                     plugin.refreshWLEnabled();
+                    plugin.saveConfig();
                     break;
                 case "clearcache":
                     plugin.clearWLCache();
