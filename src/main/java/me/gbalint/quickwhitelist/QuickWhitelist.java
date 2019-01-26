@@ -26,6 +26,7 @@ public class QuickWhitelist extends JavaPlugin {
         plugin = this;
         createConfig();
         whitelistCache = new HashSet<>();
+        refreshWLEnabled();
         refreshWLCache();
         le = new LoginEvent(plugin);
         Bukkit.getServer().getPluginManager().registerEvents(le,plugin);
