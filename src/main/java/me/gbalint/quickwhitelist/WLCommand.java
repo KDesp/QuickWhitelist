@@ -1,6 +1,8 @@
 package me.gbalint.quickwhitelist;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -95,10 +97,20 @@ public class WLCommand implements CommandExecutor {
         } else if (strings[0].equalsIgnoreCase("add")) {
             plugin.addToWLCache(strings[1]);
             plugin.addToManuallyAddedPlayers(strings[1]);
+
+            // Adicionar o jogador à whitelist do Minecraft
+            OfflinePlayer player = Bukkit.getOfflinePlayer(strings[1]);
+            player.setWhitelisted(true);
+
             sender.sendMessage(ChatColor.translateAlternateColorCodes(
                     '&', plugin.getConfig().getString("msgs.player-add")));
         } else if (strings[0].equalsIgnoreCase("remove")) {
             plugin.removeFromWLCache(strings[1]);
+
+            // Remover o jogador da whitelist do Minecraft
+            OfflinePlayer player = Bukkit.getOfflinePlayer(strings[1]);
+            player.setWhitelisted(false);
+
             sender.sendMessage(ChatColor.translateAlternateColorCodes(
                     '&', plugin.getConfig().getString("msgs.player-remove")));
         }

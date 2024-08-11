@@ -1,5 +1,6 @@
 package me.gbalint.quickwhitelist;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,10 +19,14 @@ public class PlayerEventHandler implements Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPlayerLogin(PlayerLoginEvent e) {
         Player p = e.getPlayer();
+
+        // Se a whitelist do plugin estiver desabilitada, permitir a entrada
         if (!plugin.getWLEnabled()) {
             return;
         }
-        if (!(plugin.getWLCache().contains(p.getName()) || p.hasPermission("quickwhitelist.bypass"))) {
+
+        // Verificar se o jogador está na whitelist do plugin ou na whitelist padrão do Minecraft
+        if (!(plugin.getWLCache().contains(p.getName()) || p.isWhitelisted() || p.hasPermission("quickwhitelist.bypass"))) {
             e.disallow(PlayerLoginEvent.Result.KICK_OTHER,
                     ChatColor.translateAlternateColorCodes(
                             '&',
@@ -33,8 +38,14 @@ public class PlayerEventHandler implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent e) {
         Player p = e.getPlayer();
+
+        // Se o jogador foi adicionado manualmente pela whitelist do plugin
         if (plugin.getManuallyAddedPlayers().contains(p.getName())) {
             plugin.removeFromWLCache(p.getName());
+
+            // Remover o jogador da whitelist do Minecraft
+            p.setWhitelisted(false);
+
             plugin.getLogger().info("Player " + p.getName() + " removed from the whitelist.");
         }
     }
