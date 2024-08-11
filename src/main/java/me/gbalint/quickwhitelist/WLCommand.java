@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 
 public class WLCommand implements CommandExecutor {
     private QuickWhitelist plugin;
+
     WLCommand(QuickWhitelist plugin) {
         this.plugin = plugin;
     }
@@ -86,20 +87,20 @@ public class WLCommand implements CommandExecutor {
                             '&', statusString.toString()));
                     break;
                 case "add":
-                case  "remove":
+                case "remove":
                     sender.sendMessage(ChatColor.translateAlternateColorCodes(
-                            '&',  plugin.getConfig().getString("msgs.argument-error")));
+                            '&', plugin.getConfig().getString("msgs.argument-error")));
                     break;
-
             }
         } else if (strings[0].equalsIgnoreCase("add")) {
             plugin.addToWLCache(strings[1]);
+            plugin.addToManuallyAddedPlayers(strings[1]);
             sender.sendMessage(ChatColor.translateAlternateColorCodes(
-                    '&',  plugin.getConfig().getString("msgs.player-add")));
+                    '&', plugin.getConfig().getString("msgs.player-add")));
         } else if (strings[0].equalsIgnoreCase("remove")) {
             plugin.removeFromWLCache(strings[1]);
             sender.sendMessage(ChatColor.translateAlternateColorCodes(
-                    '&',  plugin.getConfig().getString("msgs.player-remove")));
+                    '&', plugin.getConfig().getString("msgs.player-remove")));
         }
         return true;
     }

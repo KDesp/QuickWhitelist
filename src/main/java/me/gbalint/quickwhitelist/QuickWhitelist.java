@@ -13,29 +13,34 @@ public class QuickWhitelist extends JavaPlugin {
 
     private File configFile;
     private FileConfiguration config;
-    private LoginEvent le;
+    private PlayerEventHandler playerEventHandler;
     private boolean isEnabled;
     private HashSet<String> whitelistCache;
+    private HashSet<String> manuallyAddedPlayers;
     private QuickWhitelist plugin;
+
     public QuickWhitelist getPlugin() {
         return plugin;
     }
 
     @Override
-    public void onEnable(){
+    public void onEnable() {
         plugin = this;
         createConfig();
         whitelistCache = new HashSet<>();
+        manuallyAddedPlayers = new HashSet<>();
         refreshWLEnabled();
         refreshWLCache();
-        le = new LoginEvent(plugin);
-        Bukkit.getServer().getPluginManager().registerEvents(le,plugin);
+        playerEventHandler = new PlayerEventHandler(plugin);
+        Bukkit.getServer().getPluginManager().registerEvents(playerEventHandler, plugin);
         getCommand("quickwhitelist").setExecutor(new WLCommand(plugin));
     }
+
     @Override
-    public void onDisable(){
-        HandlerList.unregisterAll(le);
+    public void onDisable() {
+        HandlerList.unregisterAll(playerEventHandler);
     }
+
     private void createConfig() {
         if (!getDataFolder().exists()) {
             getDataFolder().mkdirs();
@@ -51,31 +56,44 @@ public class QuickWhitelist extends JavaPlugin {
             config.load(configFile);
         } catch (Exception e) {
             e.printStackTrace();
-
         }
-
     }
-    boolean getWLEnabled(){
+
+    boolean getWLEnabled() {
         return isEnabled;
     }
-    void refreshWLEnabled(){
+
+    void refreshWLEnabled() {
         isEnabled = plugin.getConfig().getBoolean("enabled");
     }
-    HashSet<String> getWLCache(){
+
+    HashSet<String> getWLCache() {
         return whitelistCache;
     }
-    void refreshWLCache(){
+
+    HashSet<String> getManuallyAddedPlayers() {
+        return manuallyAddedPlayers;
+    }
+
+    void refreshWLCache() {
         clearWLCache();
         whitelistCache.addAll(plugin.getConfig().getStringList("whitelisted"));
     }
-    void clearWLCache(){
+
+    void clearWLCache() {
         whitelistCache.clear();
     }
-    void addToWLCache(String name){
+
+    void addToWLCache(String name) {
         whitelistCache.add(name);
     }
-    void removeFromWLCache(String name){
+
+    void removeFromWLCache(String name) {
         whitelistCache.remove(name);
+        manuallyAddedPlayers.remove(name);  // Remove from manually added players when removed from cache
     }
 
+    void addToManuallyAddedPlayers(String name) {
+        manuallyAddedPlayers.add(name);
+    }
 }
