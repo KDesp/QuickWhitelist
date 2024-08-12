@@ -6,4 +6,14 @@ author: gbalint
 commands:
   quickwhitelist:
     description: Manage server whitelist with custom features.
-    aliases: [qw,qwhitelist,qwl]
+    aliases: [qw, qwhitelist, qwl]
+permissions:
+  quickwhitelist.edit:
+    description: Allows editing of the whitelist.
+    default: op
+  quickwhitelist.add:
+    description: Allows adding players to the whitelist using /qw add <player>.
+    default: op
+  quickwhitelist.remove:
+    description: Allows removing players from the whitelist using /qw remove <player>.
+    default: op

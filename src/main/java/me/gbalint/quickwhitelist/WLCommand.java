@@ -95,6 +95,12 @@ public class WLCommand implements CommandExecutor {
                     break;
             }
         } else if (strings[0].equalsIgnoreCase("add")) {
+            // Verificar a permissão para o comando /qw add
+            if (!sender.hasPermission("quickwhitelist.add")) {
+                sender.sendMessage(ChatColor.RED + "You don't have permission to use this command.");
+                return true;
+            }
+
             plugin.addToWLCache(strings[1]);
             plugin.addToManuallyAddedPlayers(strings[1]);
 
@@ -105,6 +111,12 @@ public class WLCommand implements CommandExecutor {
             sender.sendMessage(ChatColor.translateAlternateColorCodes(
                     '&', plugin.getConfig().getString("msgs.player-add")));
         } else if (strings[0].equalsIgnoreCase("remove")) {
+            // Verificar a permissão para o comando /qw remove
+            if (!sender.hasPermission("quickwhitelist.remove")) {
+                sender.sendMessage(ChatColor.RED + "You don't have permission to use this command.");
+                return true;
+            }
+
             plugin.removeFromWLCache(strings[1]);
 
             // Remover o jogador da whitelist do Minecraft
